@@ -1,0 +1,67 @@
+{% set name = "gepa" %}
+{% set version = "0.0.19" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+    sha256: 5ea96225828d4d0cb064121917219221fb8afb321ad51174c99d1c846a834044
+
+build:
+  number: 0
+  skip: true  # [py<310 or py>314]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - pip
+    - python
+    - python-build
+    - setuptools >=77.0.1
+    - wheel
+  run:
+    - python
+  run_constrained:
+    - litellm >=1.64.0
+    - datasets >=2.14.6
+    - mlflow >=3.0.0
+    - tqdm >=4.66.1
+
+# fixture 'rng' not found
+{% set deselect_tests = "--deselect=tests/test_state.py::test_dynamic_validation" %}
+# FileNotFoundError: [Errno 2] No such file or directory: '$SRC_DIR/tests/legacy_test_state.bin'
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_state.py::test_load_legacy_state" %}
+# fixture 'mocked_lms' not found
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_state.py::test_e2e_resume_run" %}
+
+test:
+  source_files:
+    - tests
+  imports:
+    - gepa
+  requires:
+    - pip
+    - pytest
+    - cloudpickle
+  commands:
+    - pip check
+    - pytest -v tests {{ deselect_tests }}
+
+about:
+  home: https://github.com/gepa-ai/gepa
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: A framework for optimizing textual system components (AI prompts, code snippets, etc.) using LLM-based reflection and Pareto-efficient evolutionary search
+  description: |
+    A framework for optimizing textual system components 
+    (AI prompts, code snippets, etc.) using LLM-based reflection 
+    and Pareto-efficient evolutionary search
+  doc_url: https://github.com/gepa-ai/gepa
+  dev_url: https://github.com/gepa-ai/gepa
+
+extra:
+  recipe-maintainers:
+    - moritzwilksch
