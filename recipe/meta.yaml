@@ -1,5 +1,5 @@
 {% set name = "gepa" %}
-{% set version = "0.0.19" %}
+{% set version = "0.0.17" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 5ea96225828d4d0cb064121917219221fb8afb321ad51174c99d1c846a834044
+    sha256: 641ed46f8127618341b66ee82a87fb46a21c5d2d427a5e0b91c850a7f7f64e7f
 
 build:
   number: 0
