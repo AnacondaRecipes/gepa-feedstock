@@ -28,7 +28,6 @@ requirements:
     - litellm >=1.64.0       # [py<314]
     - datasets >=2.14.6      # [py<314]
     - mlflow >=3.0.0         # [py<314]
-    - wandb                  # [py<314]
     # --- Python >= 3.14 ---
     - litellm >=1.81.0       # [py>=314]
     - datasets >=4.5.0      # [py>=314]
