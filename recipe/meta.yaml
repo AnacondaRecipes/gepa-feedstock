@@ -21,6 +21,8 @@ requirements:
     - python-build
     - setuptools >=77.0.1
     - wheel
+  run:
+    - python
   run_constrained:
     # --- Python < 3.14 ---
     - litellm >=1.64.0       # [py<314]
@@ -49,6 +51,7 @@ test:
   source_files:
     - tests
   imports:
+    - gepa
     - gepa.adapters
     - gepa.core
     - gepa.gepa_utils
