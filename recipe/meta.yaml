@@ -49,7 +49,13 @@ test:
   source_files:
     - tests
   imports:
-    - gepa
+    - gepa.adapters
+    - gepa.core
+    - gepa.gepa_utils
+    - gepa.logging
+    - gepa.proposer
+    - gepa.strategies
+    - gepa.utils
   requires:
     - pip
     - pytest
