@@ -66,6 +66,8 @@ test:
     - pip
     - pytest
     - cloudpickle
+    - litellm >=1.64.0  # [py<314]
+    - litellm >=1.81.0  # [py>=314]
 
 about:
   home: https://github.com/gepa-ai/gepa
