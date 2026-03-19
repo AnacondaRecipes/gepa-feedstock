@@ -1,5 +1,5 @@
 {% set name = "gepa" %}
-{% set version = "0.0.25" %}
+{% set version = "0.0.26" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 83c52d1c640f68f049ffa533fc70d0d7216aa8ac99c418ba3441bdac7d037855
+    sha256: 0119ca8022e93b6236bc154a57bb910bdb117485dc067d77777933dd3e9e9ad8
 
 build:
   number: 0
-  skip: true  # [py<310]
+  skip: true  # [py<310 or py>314]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -45,6 +45,8 @@ requirements:
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_state.py::test_load_legacy_state" %}
 # fixture 'mocked_lms' not found
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_state.py::test_e2e_resume_run" %}
+# ModuleNotFoundError: No module named 'conftest'
+{% set deselect_tests = deselect_tests + " --ignore=tests/test_evaluation_cache.py" %}
 
 test:
   source_files:
