@@ -44,6 +44,8 @@ requirements:
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_state.py::test_load_legacy_state" %}
 # fixture 'mocked_lms' not found
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_state.py::test_e2e_resume_run" %}
+# E   ModuleNotFoundError: No module named 'conftest'
+{% set ignore_tests = " --ignore=tests/test_evaluation_cache.py" %}
 
 test:
   source_files:
@@ -59,7 +61,7 @@ test:
     - gepa.utils
   commands:
     - pip check
-    - pytest -v tests {{ deselect_tests }}
+    - pytest -v tests {{ deselect_tests }} {{ ignore_tests}}
   requires:
     - pip
     - pytest
