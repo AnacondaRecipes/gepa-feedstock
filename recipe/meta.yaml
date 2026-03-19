@@ -1,13 +1,13 @@
 {% set name = "gepa" %}
-{% set version = "0.0.25" %}
+{% set version = "0.1.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 83c52d1c640f68f049ffa533fc70d0d7216aa8ac99c418ba3441bdac7d037855
+    sha256: 643fda01c23de4c9f01306e01305dd69facc29bcb34ad59e4cd07e6621d34aa1
 
 build:
   number: 0
@@ -18,9 +18,7 @@ requirements:
   host:
     - pip
     - python
-    - python-build
     - setuptools >=77.0.1
-    - wheel
   run:
     - python
   run_constrained:
@@ -28,6 +26,7 @@ requirements:
     - litellm >=1.64.0       # [py<314]
     - datasets >=2.14.6      # [py<314]
     - mlflow >=3.0.0         # [py<314]
+    - wandb                  # [py<314]
     # --- Python >= 3.14 ---
     - litellm >=1.81.0       # [py>=314]
     - datasets >=4.5.0      # [py>=314]
@@ -58,13 +57,13 @@ test:
     - gepa.proposer
     - gepa.strategies
     - gepa.utils
+  commands:
+    - pip check
+    - pytest -v tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
     - cloudpickle
-  commands:
-    - pip check
-    - pytest -v tests {{ deselect_tests }}
 
 about:
   home: https://github.com/gepa-ai/gepa
@@ -76,7 +75,7 @@ about:
     A framework for optimizing textual system components 
     (AI prompts, code snippets, etc.) using LLM-based reflection 
     and Pareto-efficient evolutionary search
-  doc_url: https://github.com/gepa-ai/gepa
+  doc_url: https://github.com/gepa-ai/gepa/blob/main/README.md
   dev_url: https://github.com/gepa-ai/gepa
 
 extra:
