@@ -66,6 +66,9 @@ test:
     - cloudpickle
     - datasets
     - litellm
+    # to avoid pip check conflicts from the litellm dep
+    - aiohttp ==3.13.5
+    - tokenizers ==0.22.2
 
 about:
   home: https://github.com/gepa-ai/gepa
