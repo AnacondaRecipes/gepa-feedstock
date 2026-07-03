@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 02ecb19e4aa6a1f5bb2994cd54b2057f25cd5e8cd662fee514303b2a8ba0a738
+  - url: https://github.com/{{ name }}-ai/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 391796c234f7fe4ab496c2ed51b648fb267f4c21bb7908ab315a64681c5846a4
 
 build:
   number: 0
@@ -57,13 +57,15 @@ test:
     - gepa.proposer
     - gepa.strategies
     - gepa.utils
+  commands:
+    - pip check
+    - pytest -v tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
     - cloudpickle
-  commands:
-    - pip check
-    - pytest -v tests {{ deselect_tests }}
+    - datasets
+    - litellm
 
 about:
   home: https://github.com/gepa-ai/gepa
