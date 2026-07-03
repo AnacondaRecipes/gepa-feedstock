@@ -1,0 +1,25 @@
+From 6f7057b27de7ff4b17a1836764e26d9f322e5c01 Mon Sep 17 00:00:00 2001
+From: Andrii Osipov <aosipov@anaconda.com>
+Date: Fri, 3 Jul 2026 01:59:23 -0700
+Subject: [PATCH] fix dist-meta version of the pkg
+
+---
+ pyproject.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 51f6589..a032b0d 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
+ #replace_package_name_marker
+ name="gepa"
+ #replace_package_version_marker
+-version="0.0.26"
++version="0.0.27"
+ description = "A framework for optimizing textual system components (AI prompts, code snippets, etc.) using LLM-based reflection and Pareto-efficient evolutionary search."
+ readme = "README.md"
+ authors = [
+-- 
+2.39.5 (Apple Git-154)
+
