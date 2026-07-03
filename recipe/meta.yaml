@@ -6,11 +6,13 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/{{ name }}-ai/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 391796c234f7fe4ab496c2ed51b648fb267f4c21bb7908ab315a64681c5846a4
+  url: https://github.com/{{ name }}-ai/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 391796c234f7fe4ab496c2ed51b648fb267f4c21bb7908ab315a64681c5846a4
+  patches:
+    - patches/0001-fix-dist-meta-version-of-the-pkg.patch
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
