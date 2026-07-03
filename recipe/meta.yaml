@@ -1,18 +1,18 @@
 {% set name = "gepa" %}
-{% set version = "0.0.25" %}
+{% set version = "0.0.27" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 83c52d1c640f68f049ffa533fc70d0d7216aa8ac99c418ba3441bdac7d037855
+  - url: https://github.com/{{ name }}-ai/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 391796c234f7fe4ab496c2ed51b648fb267f4c21bb7908ab315a64681c5846a4
 
 build:
   number: 0
-  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -20,7 +20,6 @@ requirements:
     - python
     - python-build
     - setuptools >=77.0.1
-    - wheel
   run:
     - python
   run_constrained:
@@ -58,13 +57,18 @@ test:
     - gepa.proposer
     - gepa.strategies
     - gepa.utils
+  commands:
+    - pip check
+    - pytest -v tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
     - cloudpickle
-  commands:
-    - pip check
-    - pytest -v tests {{ deselect_tests }}
+    - datasets
+    - litellm
+    # to avoid pip check conflicts from the litellm dep
+    - aiohttp ==3.13.5
+    - tokenizers ==0.22.2
 
 about:
   home: https://github.com/gepa-ai/gepa
