@@ -10,7 +10,7 @@ source:
   sha256: 6dd153a676ae5481764860d19286a9c0e8ddb5ef70d7f13044faf24978bdb6b8
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
@@ -70,7 +70,7 @@ test:
     - pip
     - pytest
     - cloudpickle >=3.0.0
-    - litellm >=1.83.0,<1.92
+    - litellm >=1.83.0,<1.92  # [not (win and arm64)]
 
 about:
   home: https://github.com/gepa-ai/gepa
