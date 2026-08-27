@@ -10,7 +10,7 @@ source:
   sha256: 6dd153a676ae5481764860d19286a9c0e8ddb5ef70d7f13044faf24978bdb6b8
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
@@ -47,6 +47,16 @@ requirements:
 {% set ignore_tests = " --ignore=tests/test_evaluation_cache.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_parallel_proposals.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_attach_existing_run.py" %}
+# E   ModuleNotFoundError: No module named 'litellm'
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_evaluator_wrapper.py::TestMakeLitellmLm::test_string_prompt" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_evaluator_wrapper.py::TestMakeLitellmLm::test_messages_prompt" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_lm.py::TestLMCall::test_string_prompt" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_lm.py::TestLMCall::test_messages_prompt" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_lm.py::TestLMCall::test_truncation_warning" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_lm.py::TestLMBatchComplete::test_batch_complete" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_reflection_cost_tracking.py::TestLMCostTracking::test_cost_and_tokens_accumulate" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_reflection_cost_tracking.py::TestLMCostTracking::test_batch_complete_accumulates_cost" %}  # [win and arm64]
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_reflection_cost_tracking.py::TestLMCostTracking::test_unknown_model_cost_is_zero" %}  # [win and arm64]
 
 test:
   source_files:
@@ -70,7 +80,7 @@ test:
     - pip
     - pytest
     - cloudpickle >=3.0.0
-    - litellm >=1.83.0,<1.92
+    - litellm >=1.83.0,<1.92  # [not (win and arm64)]
 
 about:
   home: https://github.com/gepa-ai/gepa
